@@ -13,4 +13,8 @@ public class Category
     [Required]
     [MaxLength(50)]
     public string nazwa { get; set; } = string.Empty;
+
+    public ICollection<Payment> Payments { get; set; } = new List<Payment>();
+
+    public ICollection<RecPayment> RecPayments { get; set; } = new List<RecPayment>();
 }
