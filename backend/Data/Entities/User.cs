@@ -39,7 +39,7 @@ public class User
     public bool IsActive { get; set; } = true;
 
     [Column("data_usuniecia")]
-    public DateTime DeletedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
 
     public ICollection<Payment> Payments { get; set; } = new List<Payment>();
 

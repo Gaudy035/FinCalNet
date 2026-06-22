@@ -17,8 +17,6 @@ export default function LoginForm() {
     const formValues = Object.fromEntries(formData.entries());
 
     const payload = {
-      imie: '',
-      nazwisko: '',
       ...formValues,
     };
 
