@@ -1,5 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
-// using System.Text.Json;
 using System.Text;
 using backend.Data;
 using backend.Services;
@@ -29,7 +27,6 @@ builder.Services.AddCors(options =>
     options.AddPolicy("FrontendPolicy", policy =>
     {
         policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod();
-        // policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     });
 });
 

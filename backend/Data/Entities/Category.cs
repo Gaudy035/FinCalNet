@@ -12,7 +12,8 @@ public class Category
 
     [Required]
     [MaxLength(50)]
-    public string nazwa { get; set; } = string.Empty;
+    [Column("nazwa")]
+    public string CategoryName { get; set; } = string.Empty;
 
     public ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
