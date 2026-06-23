@@ -11,7 +11,7 @@ public class PaymentResponseDto
     public int UserId { get; set; }
 
     [JsonPropertyName("id_kategorii")]
-    public int CategoryId { get; set; }
+    public int? CategoryId { get; set; }
 
     [JsonPropertyName("typ")]
     public string PaymentType { get; set; } = string.Empty;
@@ -20,7 +20,7 @@ public class PaymentResponseDto
     public string Title { get; set; } = string.Empty;
 
     [JsonPropertyName("opis")]
-    public string Description { get; set; } = string.Empty;
+    public string? Description { get; set; } = string.Empty;
 
     [JsonPropertyName("kwota")]
     public double Amount { get; set; }
