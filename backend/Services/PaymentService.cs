@@ -17,6 +17,8 @@ public class PaymentService: IPaymentService
     public async Task<IEnumerable<PaymentResponseDto>> GetPayments(int userId)
     {
         return await _context.Payments
+            .Where(p => p.UserId == userId)
+            .OrderByDescending(p => p.Date)
             .Select(p => new PaymentResponseDto
             {
                 PaymentId = p.PaymentId,
@@ -30,13 +32,15 @@ public class PaymentService: IPaymentService
                 Account = p.Account,
                 AccountOwner = p.AccountOwner,
                 Date = p.Date
-            }).Where(p => p.UserId == userId)
+            })
             .ToListAsync();
     }
     
     public async Task<IEnumerable<PaymentResponseDto>> GetIncomes(int userId)
     {
         return await _context.Payments
+            .Where(p => p.UserId == userId && p.PaymentType == "wplyw")
+            .OrderByDescending(p => p.Date)
             .Select(p => new PaymentResponseDto
             {
                 PaymentId = p.PaymentId,
@@ -50,13 +54,15 @@ public class PaymentService: IPaymentService
                 Account = p.Account,
                 AccountOwner = p.AccountOwner,
                 Date = p.Date
-            }).Where(p => p.UserId == userId && p.PaymentType == "wplyw")
+            })
             .ToListAsync();
     }
     
     public async Task<IEnumerable<PaymentResponseDto>> GetExpenses(int userId)
     {
         return await _context.Payments
+            .Where(p => p.UserId == userId && p.PaymentType == "wydatek")
+            .OrderByDescending(p => p.Date)
             .Select(p => new PaymentResponseDto
             {
                 PaymentId = p.PaymentId,
@@ -70,7 +76,7 @@ public class PaymentService: IPaymentService
                 Account = p.Account,
                 AccountOwner = p.AccountOwner,
                 Date = p.Date
-            }).Where(p => p.UserId == userId && p.PaymentType == "wydatek")
+            })
             .ToListAsync();
     }
 
