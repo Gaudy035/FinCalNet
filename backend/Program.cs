@@ -1,9 +1,11 @@
 using System.Text;
 using backend.Data;
+using backend.Jobs;
 using backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Quartz;
 
 // JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -51,11 +53,31 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddQuartz(q =>
+{
+    var jobKey = new JobKey("RecPaymentJob");
+
+    q.AddJob<RecPaymentJob>(options => options.WithIdentity(jobKey));
+
+    q.AddTrigger(options => options
+        .ForJob(jobKey)
+        .WithIdentity("RecPaymentJobTrigger")
+        .StartNow()
+        .WithSimpleSchedule(x => x
+            .WithIntervalInHours(12)
+            .RepeatForever()
+        )
+    );
+});
+
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IRecPaymentService, RecPaymentService>();
 builder.Services.AddScoped<IChartsService, ChartsService>();
+builder.Services.AddTransient<RecPaymentJob>();
 
 var app = builder.Build();
 
