@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace backend.DTOs.Payment;
 
-public class PaymentCreateDto
+public class RecPaymentCreateDto
 {
     [JsonPropertyName("id_kategorii")]
     public int CategoryId { get; set; }
@@ -28,6 +28,9 @@ public class PaymentCreateDto
     [JsonPropertyName("wlasciciel_konta")]
     public string? AccountOwner { get; set; }
 
-    [JsonPropertyName("data")]
-    public DateOnly Date { get; set; }
+    [JsonPropertyName("co_ile")]
+    public string Interval { get; set; } = string.Empty;
+
+    [JsonPropertyName("nastepny_termin")]
+    public DateOnly NextDate { get; set; }
 }

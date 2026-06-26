@@ -2,10 +2,16 @@ using System.Text.Json.Serialization;
 
 namespace backend.DTOs.Payment;
 
-public class PaymentCreateDto
+public class RecPaymentResponseDto
 {
+    [JsonPropertyName("id_uzytkownika")]
+    public int UserId { get; set; }
+
     [JsonPropertyName("id_kategorii")]
-    public int CategoryId { get; set; }
+    public int? CategoryId { get; set; }
+
+    [JsonPropertyName("id_t_powtarzalnej")]
+    public int RecPaymentId { get; set; }
 
     [JsonPropertyName("typ")]
     public string PaymentType { get; set; } = string.Empty;
@@ -28,6 +34,12 @@ public class PaymentCreateDto
     [JsonPropertyName("wlasciciel_konta")]
     public string? AccountOwner { get; set; }
 
-    [JsonPropertyName("data")]
-    public DateOnly Date { get; set; }
+    [JsonPropertyName("co_ile")]
+    public string Interval { get; set; } = string.Empty;
+
+    [JsonPropertyName("nastepny_termin")]
+    public DateOnly NextDate { get; set; }
+
+    [JsonPropertyName("czy_aktywna")]
+    public bool IsActive { get; set; }
 }

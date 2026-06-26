@@ -10,7 +10,6 @@ public class RecPayment
     [Column("id_t_powtarzalnej")]
     public int RecPaymentId { get; set; }
 
-
     [Column("id_uzytkownika")]
     public int UserId { get; set; }
 
@@ -28,7 +27,7 @@ public class RecPayment
     public string Title { get; set; } = string.Empty;
 
     [Column("opis")]
-    public string? Description { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 
     [Required]
     [MaxLength(10)]
@@ -52,7 +51,7 @@ public class RecPayment
     public string Interval { get; set; } = string.Empty;
 
     [Column("nastepny_termin")]
-    public DateOnly Date { get; set; }
+    public DateOnly NextDate { get; set; }
 
     [Column("czy_aktywna")]
     public bool IsActive { get; set; } = true;
