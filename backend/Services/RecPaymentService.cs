@@ -1,6 +1,6 @@
 using backend.Data;
 using backend.Data.Entities;
-using backend.DTOs.Payment;
+using backend.DTOs.RecPayment;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services;

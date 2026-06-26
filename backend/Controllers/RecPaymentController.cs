@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using backend.DTOs.Payment;
+using backend.DTOs.RecPayment;
 using backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-using backend.DTOs.Payment;
+using backend.DTOs.RecPayment;
 
 namespace backend.Services;
 

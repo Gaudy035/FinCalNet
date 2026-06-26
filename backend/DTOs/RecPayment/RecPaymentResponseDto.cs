@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace backend.DTOs.Payment;
+namespace backend.DTOs.RecPayment;
 
 public class RecPaymentResponseDto
 {
