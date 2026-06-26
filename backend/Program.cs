@@ -55,6 +55,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IRecPaymentService, RecPaymentService>();
+builder.Services.AddScoped<IChartsService, ChartsService>();
 
 var app = builder.Build();
 
