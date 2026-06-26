@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:16
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/skrypt.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - '5433:5432'
+
+  backend:
+    build:
+      context: ./backend
+    container_name: movierate_backend
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:8000
+      ConnectionStrings__DbConnection: 'Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}'
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

@@ -56,11 +56,7 @@ export default function RegisterForm() {
           inpId='haslo'
           inpName='haslo'
         />
-        <ButtonTemp
-          btnClick={() => console.log('SignIN!!!')}
-          btnText='Zarejestruj'
-          btnType='submit'
-        />
+        <ButtonTemp btnText='Zarejestruj' btnType='submit' />
         <div>
           <h2 className='text-red-600'>{error ? error : ''}</h2>
           <h2 className='text-green-600'>
