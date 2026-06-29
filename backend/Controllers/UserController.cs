@@ -54,6 +54,28 @@ public class UserController: ControllerBase
         return Ok(responseDto);
     }
 
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh()
+    {
+        var refreshTokenString = Request.Cookies["refresh_token"];
+        
+        if (string.IsNullOrEmpty(refreshTokenString))
+        {
+            return Unauthorized(new { detail = "Sesja wygasla" });
+        }
+
+        var tokens = await _userService.Refresh(refreshTokenString);
+
+        if (tokens == null)
+        {
+            return Unauthorized(new { detail = "Sesja wygasla" });
+        }
+
+        CreateTokenCookie(tokens.RefreshToken);
+
+        return Ok(tokens.AccessToken);
+    }
+
     [Authorize]
     [HttpPut("update_email")]
     public async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailDto dto)
