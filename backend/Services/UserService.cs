@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace backend.Services;
 
@@ -20,7 +21,7 @@ public class UserService: IUserService
         _configuration = configuration;
     }
 
-    public string GenerateAccessToken(int userId)
+    private string GenerateAccessToken(int userId)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var keyStr = _configuration["Jwt:Key"];
@@ -42,6 +43,26 @@ public class UserService: IUserService
         return tokenHandler.WriteToken(token);
     }
 
+    private async string GenerateRefreshToken(int userId)
+    {
+        var randomBytes = new byte[64];
+        RandomNumberGenerator.Fill(randomBytes);
+        var newTokenString = Convert.ToBase64String(randomBytes);
+
+        var newRefreshToken = new RefreshToken
+        {
+            UserId = userId,
+            TokenString = newTokenString,
+            IsActive = true,
+            ExpiresAt = DateTimeOffset.UtcNow.AddDays(7)
+        };
+
+        _context.RefreshTokens.Add(newRefreshToken);
+        await _context.SaveChangesAsync();
+
+        return newTokenString;
+    }
+
     public async Task<LoginResponseDto?> Login(LoginDto dto)
     {
         var user = await _context.Users
@@ -55,10 +76,12 @@ public class UserService: IUserService
             return null;
         }
 
-        var token = GenerateAccessToken(user.UserId);
+        var accessToken = GenerateAccessToken(user.UserId);
+        var refreshToken = GenerateRefreshToken(user.UserId);
+
         return new LoginResponseDto
         {
-            AccessToken = token
+            AccessToken = accessToken
         };
     }
 
