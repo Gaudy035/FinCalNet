@@ -30,7 +30,7 @@ export default function PieChart() {
       .get('/get_stats')
       .then((response) => setStats(response.data))
       .catch((error) => console.log('Blad polaczenia z API', error));
-  }, [token]);
+  }, []);
 
   const options = {
     plugins: {

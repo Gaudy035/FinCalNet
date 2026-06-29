@@ -17,7 +17,7 @@ export default function LeftPanel() {
       .get('/wplywy')
       .then((response) => setWplywy(response.data))
       .catch((error) => console.log('Blad przy pobieraniu wplywow', error));
-  }, [token]);
+  }, []);
 
   return (
     <div className='flex flex-1 max-w-1/2 border-2 border-white justify-start items-center flex-col min-h-full py-6 relative'>

@@ -44,7 +44,7 @@ export default function BarChart() {
       .get('/get_summary')
       .then((response) => setSummary(response.data))
       .catch((error) => console.log('Blad polaczenia z API', error));
-  }, [token]);
+  }, []);
 
   const options = {
     plugins: {

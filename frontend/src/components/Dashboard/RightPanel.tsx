@@ -17,7 +17,7 @@ export default function RightPanel() {
       .get('/wydatki')
       .then((response) => setWydatki(response.data))
       .catch((error) => console.log('Blad przy pobieraniu wydatkow', error));
-  }, [token]);
+  }, []);
 
   return (
     <div className='flex flex-1 max-w-1/2 border-2 border-white justify-start items-center flex-col min-h-full py-6 relative'>

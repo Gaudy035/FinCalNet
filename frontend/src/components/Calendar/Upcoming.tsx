@@ -17,7 +17,7 @@ export default function Upcoming() {
       .get('/get_recurring')
       .then((response) => setTransakcje(response.data))
       .catch((error) => console.log('blad polaczenia z API', error));
-  }, [token]);
+  }, []);
 
   return (
     <div className='flex flex-col justify-center items-center w-1/2'>

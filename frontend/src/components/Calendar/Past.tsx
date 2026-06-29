@@ -17,7 +17,7 @@ export default function Past() {
       .get('/transakcje')
       .then((response) => setTransakcje(response.data))
       .catch((error) => console.log('Blad polaczenia z API', error));
-  }, [token]);
+  }, []);
 
   return (
     <div className='flex flex-col justify-center items-center w-1/2'>
