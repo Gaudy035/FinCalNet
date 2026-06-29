@@ -20,6 +20,28 @@ public class UserService: IUserService
         _configuration = configuration;
     }
 
+    public string GenerateAccessToken(int userId)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var keyStr = _configuration["Jwt:Key"];
+        var key = Encoding.UTF8.GetBytes(keyStr!);
+
+        var tokenDescriptior = new SecurityTokenDescriptor()
+        {
+            Subject = new ClaimsIdentity([
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString())
+            ]),
+            Expires = DateTime.UtcNow.AddMinutes(60),
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature
+            )            
+        };
+
+        var token = tokenHandler.CreateToken(tokenDescriptior);
+        return tokenHandler.WriteToken(token);
+    }
+
     public async Task<LoginResponseDto?> Login(LoginDto dto)
     {
         var user = await _context.Users
@@ -33,26 +55,10 @@ public class UserService: IUserService
             return null;
         }
 
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var keyStr = _configuration["Jwt:Key"];
-        var key = Encoding.UTF8.GetBytes(keyStr!);
-
-        var tokenDescriptior = new SecurityTokenDescriptor()
-        {
-            Subject = new ClaimsIdentity([
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString())
-            ]),
-            Expires = DateTime.UtcNow.AddMinutes(60),
-            SigningCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha256Signature
-            )            
-        };
-
-        var token = tokenHandler.CreateToken(tokenDescriptior);
+        var token = GenerateAccessToken(user.UserId);
         return new LoginResponseDto
         {
-            AccessToken = tokenHandler.WriteToken(token)
+            AccessToken = token
         };
     }
 
