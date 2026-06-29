@@ -55,7 +55,7 @@ CREATE TABLE t_refresh_token(
 	token_string VARCHAR(128) NOT NULL,
 	czy_aktywny BOOLEAN,
 	data_wygasniecia TIMESTAMPTZ NOT NULL,
-	data_uniewaznieniea TIMESTAMPTZ
+	data_uniewaznienia TIMESTAMPTZ
 );
 
 INSERT INTO t_kategorie (nazwa) VALUES ('rozrywka');
