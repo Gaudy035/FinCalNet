@@ -16,6 +16,17 @@ public class UserController: ControllerBase
         _userService = userService;
     }
 
+    private void CreateTokenCookie(string refreshToken)
+    {
+        Response.Cookies.Append("refresh_token", refreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = false,
+            SameSite = SameSiteMode.Lax,
+            Expires = DateTimeOffset.UtcNow.AddDays(7)
+        });
+    }
+
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
@@ -35,6 +46,11 @@ public class UserController: ControllerBase
         {
             return BadRequest(new { detail = "Nieprawidlowy email lub haslo" });
         }
+
+        var refreshToken = responseDto.RefreshToken;
+
+        CreateTokenCookie(refreshToken);
+        
         return Ok(responseDto);
     }
 
