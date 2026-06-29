@@ -12,4 +12,5 @@ public interface IUserService
     
     Task<bool> ChangeEmail(int userId, ChangeEmailDto dto);
 
+    Task<RefreshResponseDto?> Refresh(string refreshTokenString);
 }
