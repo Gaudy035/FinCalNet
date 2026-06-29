@@ -48,6 +48,16 @@ CREATE TABLE t_t_powtarzalne(
 	czy_aktywna BOOLEAN DEFAULT TRUE
 );
 
+CREATE TABLE t_refresh_token(
+	id_token SERIAL PRIMARY KEY,
+	id_uzytkownika INTEGER NOT NULL REFERENCES
+		t_uzytkownik(id_uzytkownika) ON DELETE CASCADE,
+	token_string VARCHAR(128) NOT NULL,
+	czy_aktywny BOOLEAN,
+	data_wygasniecia TIMESTAMPTZ NOT NULL,
+	data_uniewaznieniea TIMESTAMPTZ
+);
+
 INSERT INTO t_kategorie (nazwa) VALUES ('rozrywka');
 INSERT INTO t_kategorie (nazwa) VALUES ('transport');
 INSERT INTO t_kategorie (nazwa) VALUES ('jedzenie');
