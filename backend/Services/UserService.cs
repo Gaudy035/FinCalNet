@@ -43,7 +43,7 @@ public class UserService: IUserService
         return tokenHandler.WriteToken(token);
     }
 
-    private async string GenerateRefreshToken(int userId)
+    private async Task<string> GenerateRefreshToken(int userId)
     {
         var randomBytes = new byte[64];
         RandomNumberGenerator.Fill(randomBytes);
@@ -77,11 +77,12 @@ public class UserService: IUserService
         }
 
         var accessToken = GenerateAccessToken(user.UserId);
-        var refreshToken = GenerateRefreshToken(user.UserId);
+        var refreshToken = await GenerateRefreshToken(user.UserId);
 
         return new LoginResponseDto
         {
-            AccessToken = accessToken
+            AccessToken = accessToken,
+            RefreshToken = refreshToken
         };
     }
 

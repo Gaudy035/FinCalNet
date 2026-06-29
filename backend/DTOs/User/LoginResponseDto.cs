@@ -5,6 +5,10 @@ namespace backend.DTOs.User;
 
 public class LoginResponseDto
 {
+    [JsonPropertyName("refresh_token")]
+    [Required]
+    public string RefreshToken { get; set; } = string.Empty;
+
     [JsonPropertyName("access_token")]
     [Required]
     public string AccessToken { get; set; } = string.Empty;
