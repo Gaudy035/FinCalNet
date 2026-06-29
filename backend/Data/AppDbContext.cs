@@ -14,4 +14,6 @@ public class AppDbContext: DbContext
     public DbSet<Payment> Payments => Set<Payment>();
     
     public DbSet<RecPayment> RecPayments => Set<RecPayment>();
+
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 }
