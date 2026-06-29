@@ -6,6 +6,8 @@ public interface IUserService
 {
     Task RevokeToken(string refreshTokenString);
 
+    Task<RefreshResponseDto?> Refresh(string refreshTokenString);
+
     Task<LoginResponseDto?> Login(LoginDto dto);
 
     Task<RegisterResponseDto?> Register(RegisterDto dto);
@@ -13,6 +15,4 @@ public interface IUserService
     Task<bool> ChangePassword(int userId, ChangePasswordDto dto);
     
     Task<bool> ChangeEmail(int userId, ChangeEmailDto dto);
-
-    Task<RefreshResponseDto?> Refresh(string refreshTokenString);
 }

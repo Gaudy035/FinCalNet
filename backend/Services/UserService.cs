@@ -78,6 +78,33 @@ public class UserService: IUserService
         await _context.SaveChangesAsync();
     }
 
+    public async Task<RefreshResponseDto?> Refresh(string refreshTokenString)
+    {
+        var refreshToken = await _context.RefreshTokens
+            .FirstOrDefaultAsync(rt => rt.TokenString == refreshTokenString);
+
+        if (refreshToken == null || !refreshToken.IsActive)
+        {
+            return null;
+        }
+
+        await RevokeToken(refreshTokenString);
+
+        if (refreshToken.ExpiresAt <= DateTimeOffset.UtcNow)
+        {
+            return null;
+        }
+
+        var newAccessToken = GenerateAccessToken(refreshToken.UserId);
+        var newRefreshToken = await GenerateRefreshToken(refreshToken.UserId);
+
+        return new RefreshResponseDto
+        {
+            AccessToken = newAccessToken,
+            RefreshToken = newRefreshToken
+        };
+    }
+
     public async Task<LoginResponseDto?> Login(LoginDto dto)
     {
         var user = await _context.Users
@@ -179,32 +206,5 @@ public class UserService: IUserService
         user.Password = newHash;
         await _context.SaveChangesAsync();
         return true;
-    }
-
-    public async Task<RefreshResponseDto?> Refresh(string refreshTokenString)
-    {
-        var refreshToken = await _context.RefreshTokens
-            .FirstOrDefaultAsync(rt => rt.TokenString == refreshTokenString);
-
-        if (refreshToken == null || !refreshToken.IsActive)
-        {
-            return null;
-        }
-
-        await RevokeToken(refreshTokenString);
-
-        if (refreshToken.ExpiresAt <= DateTimeOffset.UtcNow)
-        {
-            return null;
-        }
-
-        var newAccessToken = GenerateAccessToken(refreshToken.UserId);
-        var newRefreshToken = await GenerateRefreshToken(refreshToken.UserId);
-
-        return new RefreshResponseDto
-        {
-            AccessToken = newAccessToken,
-            RefreshToken = newRefreshToken
-        };
     }
 }
