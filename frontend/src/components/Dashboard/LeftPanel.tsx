@@ -4,7 +4,7 @@ import type Transakcja from './Transakcja';
 import api from '../../api';
 
 export default function LeftPanel() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
   const [wplywy, setWplywy] = useState<Transakcja[]>([]);
 
   useEffect(() => {

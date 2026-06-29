@@ -5,7 +5,7 @@ import Upcoming from './Calendar/Upcoming';
 
 export default function Calendar() {
   const [view, setView] = useState<'przeszle' | 'nadchodzace'>('nadchodzace');
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
 
   if (!token) {
     return (

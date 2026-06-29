@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
 
   return (
     <div className='flex flex-row min-w-full min-h-full flex-1 justify-center  gap-3 p-4 relative'>

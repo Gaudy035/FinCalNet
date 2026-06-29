@@ -4,7 +4,7 @@ import NavbarLink from './subcomponents/NavbarLink';
 import BarChart from './Charts/BarChart';
 
 export default function Charts() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
 
   const [view, setView] = useState<'pie' | 'bar'>('bar');
 

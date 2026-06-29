@@ -4,7 +4,7 @@ import type Transakcja from './Transakcja';
 import api from '../../api';
 
 export default function RightPanel() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
   const [wydatki, setWydatki] = useState<Transakcja[]>([]);
 
   useEffect(() => {

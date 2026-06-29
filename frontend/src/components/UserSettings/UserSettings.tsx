@@ -15,7 +15,7 @@ export default function UserSettings({
 
   const logOut = async () => {
     change();
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
     await api.post('/logout');
     navigate('/');
   };

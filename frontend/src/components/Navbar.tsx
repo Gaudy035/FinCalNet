@@ -7,7 +7,7 @@ import Logo from './subcomponents/Logo';
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
   const [vis, setVis] = useState<boolean>(false);
 
   return (

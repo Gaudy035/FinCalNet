@@ -22,7 +22,7 @@ export default function LoginForm() {
 
     try {
       const response = await api.post('/login', payload);
-      localStorage.setItem('token', response.data.access_token);
+      localStorage.setItem('access_token', response.data.access_token);
       navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.detail);
