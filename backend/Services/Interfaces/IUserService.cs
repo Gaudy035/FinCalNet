@@ -4,6 +4,8 @@ namespace backend.Services;
 
 public interface IUserService
 {
+    Task RevokeToken(string refreshTokenString);
+
     Task<LoginResponseDto?> Login(LoginDto dto);
 
     Task<RegisterResponseDto?> Register(RegisterDto dto);

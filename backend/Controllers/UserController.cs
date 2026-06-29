@@ -27,6 +27,16 @@ public class UserController: ControllerBase
         });
     }
 
+    private async Task ClearToken()
+    {
+        var refreshToken = Request.Cookies["refresh_token"];
+        if (!string.IsNullOrEmpty(refreshToken))
+        {
+            await _userService.RevokeToken(refreshToken);
+        }
+        Response.Cookies.Delete("refresh_token");
+    }
+
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
@@ -54,6 +64,13 @@ public class UserController: ControllerBase
         return Ok(responseDto);
     }
 
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await ClearToken();
+        return Ok(new { message = "Wylogowano pomyslnie" });
+    }
+
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh()
     {
@@ -73,7 +90,7 @@ public class UserController: ControllerBase
 
         CreateTokenCookie(tokens.RefreshToken);
 
-        return Ok(tokens.AccessToken);
+        return Ok(tokens);
     }
 
     [Authorize]

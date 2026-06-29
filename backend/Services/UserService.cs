@@ -63,7 +63,7 @@ public class UserService: IUserService
         return newTokenString;
     }
 
-    private async Task RevokeToken(string refreshTokenString)
+    public async Task RevokeToken(string refreshTokenString)
     {
         var refreshToken = await _context.RefreshTokens
             .FirstOrDefaultAsync(rt => rt.TokenString == refreshTokenString);
