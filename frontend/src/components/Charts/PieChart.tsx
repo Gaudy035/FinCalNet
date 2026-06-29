@@ -17,7 +17,7 @@ interface Stat {
 ChartJS.register(ArcElement, Tooltip, Legend, plugins);
 
 export default function PieChart() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
   const [stats, setStats] = useState<Stat[]>([]);
 
   useEffect(() => {

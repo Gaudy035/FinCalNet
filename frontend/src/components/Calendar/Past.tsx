@@ -4,7 +4,7 @@ import type Transakcja from '../Dashboard/Transakcja';
 import api from '../../api';
 
 export default function Past() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
   const [transakcje, setTransakcje] = useState<Transakcja[]>([]);
 
   useEffect(() => {

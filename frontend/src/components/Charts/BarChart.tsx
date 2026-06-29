@@ -28,7 +28,7 @@ interface Summary {
 }
 
 export default function BarChart() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
   const [summary, setSummary] = useState<Summary[]>([]);
   const wplywy = summary.find((s) => s.typ === 'wplyw')?.kwota || 0;
   const wydatki = summary.find((s) => s.typ === 'wydatek')?.kwota || 0;

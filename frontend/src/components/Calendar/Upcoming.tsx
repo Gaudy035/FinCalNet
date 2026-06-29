@@ -4,7 +4,7 @@ import RecurringBox from '../subcomponents/RecurringBox';
 import api from '../../api';
 
 export default function Upcoming() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access_token');
   const [transakcje, setTransakcje] = useState<TPowtarzalna[]>([]);
 
   useEffect(() => {
