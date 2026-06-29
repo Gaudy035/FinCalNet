@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import ButtonTemp from '../subcomponents/ButtonTemp';
+import api from '../../api';
 
 interface UserSettingsProps {
   visibility: boolean;
@@ -12,9 +13,10 @@ export default function UserSettings({
 }: UserSettingsProps) {
   const navigate = useNavigate();
 
-  const logOut = () => {
+  const logOut = async () => {
     change();
     localStorage.removeItem('token');
+    await api.post('/logout');
     navigate('/');
   };
 
