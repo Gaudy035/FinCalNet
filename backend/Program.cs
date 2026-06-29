@@ -55,14 +55,24 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddQuartz(q =>
 {
-    var jobKey = new JobKey("RecPaymentJob");
+    var recPaymentJobKey = new JobKey("RecPaymentJob");
 
-    q.AddJob<RecPaymentJob>(options => options.WithIdentity(jobKey));
+    q.AddJob<RecPaymentJob>(options => options.WithIdentity(recPaymentJobKey));
 
     q.AddTrigger(options => options
-        .ForJob(jobKey)
+        .ForJob(recPaymentJobKey)
         .WithIdentity("RecPaymentJobTrigger")
         .WithCronSchedule("0 0 0 * * ?")
+    );
+
+    var tokenCleanupJobKey = new JobKey("TokenCleanupJobKey");
+
+    q.AddJob<TokenCleanupJob>(options => options.WithIdentity(tokenCleanupJobKey));
+
+    q.AddTrigger(options => options
+        .ForJob(tokenCleanupJobKey)
+        .WithIdentity("TokenCleanupJobTrigger")
+        .WithCronSchedule("0 0 3 * * ?")
     );
 });
 
