@@ -62,11 +62,7 @@ builder.Services.AddQuartz(q =>
     q.AddTrigger(options => options
         .ForJob(jobKey)
         .WithIdentity("RecPaymentJobTrigger")
-        .StartNow()
-        .WithSimpleSchedule(x => x
-            .WithIntervalInHours(12)
-            .RepeatForever()
-        )
+        .WithCronSchedule("0 0 0 * * ?")
     );
 });
 
@@ -77,7 +73,6 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IRecPaymentService, RecPaymentService>();
 builder.Services.AddScoped<IChartsService, ChartsService>();
-builder.Services.AddTransient<RecPaymentJob>();
 
 var app = builder.Build();
 

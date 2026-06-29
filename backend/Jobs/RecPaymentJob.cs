@@ -7,12 +7,12 @@ namespace backend.Jobs;
 
 public class RecPaymentJob: IJob
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<RecPaymentJob> _logger;
 
-    public RecPaymentJob(IServiceProvider serviceProvider, ILogger<RecPaymentJob> logger)
+    public RecPaymentJob(IServiceScopeFactory scopeFactory, ILogger<RecPaymentJob> logger)
     {
-        _serviceProvider = serviceProvider;
+        _scopeFactory = scopeFactory;
         _logger = logger;
     }
 
@@ -31,7 +31,7 @@ public class RecPaymentJob: IJob
     {
         _logger.LogInformation("[{Time}] Sprawdzanie transakcji cyklicznych", DateTime.Now);
 
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = _scopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
         var today = DateOnly.FromDateTime(DateTime.Today);
