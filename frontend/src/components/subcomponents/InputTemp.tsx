@@ -18,6 +18,7 @@ export default function InputTemp({
   return (
     <input
       type={inpType}
+      step={inpType === 'number' ? 0.01 : undefined}
       placeholder={inpText}
       id={inpId}
       name={inpName}
